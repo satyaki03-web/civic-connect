@@ -1,0 +1,11 @@
+{
+  "name": "Civic Connect",
+  "description": "A streamlined urban reporting tool that empowers citizens to report civic infrastructure issues instantly, while providing municipal planners with a data-driven dashboard for tracking and resolution.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

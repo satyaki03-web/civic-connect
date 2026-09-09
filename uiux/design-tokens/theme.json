@@ -1,0 +1,16 @@
+{
+  "name": "Civic Connect - Theme Tokens",
+  "colors": {
+    "primary": "#2E7D32",
+    "secondary": "#FFC107",
+    "background": "#F9FAFB",
+    "surface": "#FFFFFF",
+    "error": "#D32F2F",
+    "text_primary": "#111827",
+    "text_secondary": "#6B7280"
+  },
+  "typography": {
+    "fontFamily": "Inter, Roboto, sans-serif",
+    "baseSize": "16px"
+  }
+}

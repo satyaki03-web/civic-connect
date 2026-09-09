@@ -1,0 +1,144 @@
+        <AnimatePresence mode="wait">
+          {view === 'feed' && (
+            <motion.div 
+              key="feed"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              className="p-4 pb-24"
+            >
+              <h2 className="text-lg font-semibold text-gray-800 mb-4">My Reports</h2>
+              <div className="space-y-4">
+                {view === 'feed' ? (
+                  myReports.length === 0 ? (
+                    <div className="text-center py-10 text-gray-500">
+                      No reports yet. Help keep your city safe!
+                    </div>
+                  ) : (
+                    myReports.map(report => (
+                      <div key={report.id} onClick={() => openReportDetails(report.id)} className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden cursor-pointer hover:shadow-md transition-shadow">
+                        <div className="h-40 w-full overflow-hidden relative bg-gray-100">
+                          <img src={report.imageUrl} alt={report.category} className="w-full h-full object-cover" />
+                          <div className={`absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-bold border flex items-center gap-1.5 shadow-sm backdrop-blur-md bg-white/95 ${getStatusColor(report.status)}`}>
+                            {getStatusIcon(report.status)}
+                            {report.status}
+                          </div>
+                        </div>
+                        <div className="p-4">
+                          <div className="flex justify-between items-start mb-1">
+                            <h3 className="font-bold text-gray-900 text-lg">{report.category}</h3>
+                            <span className={`text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded ${report.priority === 'High' ? 'bg-red-50 text-red-700' : 'bg-gray-50 text-gray-600'}`}>
+                              {report.priority}
+                            </span>
+                          </div>
+                          <p className="text-sm text-gray-600 mt-1 line-clamp-2">{report.description}</p>
+                          <div className="flex items-center gap-4 mt-4 text-xs font-medium text-gray-400">
+                            <span className="flex items-center gap-1.5">
+                              <MapPin className="w-3.5 h-3.5 text-gray-400" />
+                              {report.location.address}
+                            </span>
+                            <span className="flex items-center gap-1.5">
+                              <Clock className="w-3.5 h-3.5 text-gray-400" />
+                              {formatTimeSafe(report.timestamp)}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )
+                ) : view === 'detail' && selectedReportId ? (
+                  <motion.div 
+                    initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+                    className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100"
+                  >
+                    {(() => {
+                      const report = myReports.find(r => r.id === selectedReportId);
+                      if (!report) return (
+                        <div className="p-8 text-center text-gray-500 font-medium">
+                          Report details unavailable. Please refresh or try again.
+                        </div>
+                      );
+                      
+                      const progress = report.status === 'Resolved' ? 100 : report.status === 'In Progress' ? 45 : 10;
+                      const eta = report.status === 'Resolved' ? 'Completed' : report.priority === 'High' ? '4-6 Hours' : '2-3 Days';
+
+                      return (
+                        <>
+                          <div className="relative h-48 bg-gray-100">
+                            <img src={report.imageUrl} alt={report.category} className="w-full h-full object-cover" />
+                            <button onClick={() => setView('feed')} className="absolute top-3 left-3 p-1.5 bg-white/90 backdrop-blur-sm rounded-full shadow-sm text-gray-700 hover:bg-white transition-colors">
+                              <X className="w-5 h-5" />
+                            </button>
+                            <div className={`absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-bold border flex items-center gap-1.5 shadow-sm backdrop-blur-md bg-white/95 ${getStatusColor(report.status)}`}>
+                              {getStatusIcon(report.status)}
+                              {report.status}
+                            </div>
+                          </div>
+                          <div className="p-4">
+                            <div className="flex justify-between items-start mb-2">
+                              <h3 className="font-bold text-gray-900 text-xl">{report.category}</h3>
+                              <span className={`text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded ${report.priority === 'High' ? 'bg-red-50 text-red-700' : 'bg-gray-50 text-gray-600'}`}>
+                                {report.priority}
+                              </span>
+                            </div>
+                            
+                            <div className="flex items-center gap-4 text-xs font-medium text-gray-400 mb-4 pb-4 border-b border-gray-50">
+                              <span className="flex items-center gap-1.5">
+                                <MapPin className="w-3.5 h-3.5 text-gray-400" />
+                                {report.location.address}
+                              </span>
+                              <span className="flex items-center gap-1.5">
+                                <Clock className="w-3.5 h-3.5 text-gray-400" />
+                                {formatTimeSafe(report.timestamp)}
+                              </span>
+                            </div>
+                            
+                            <p className="text-gray-700 text-sm leading-relaxed mb-6">
+                              {report.description}
+                            </p>
+
+                            <div className="bg-gray-50 rounded-xl p-4 border border-gray-100">
+                              <h3 className="text-[11px] font-bold text-gray-400 uppercase tracking-wider mb-4">Resolution Tracking</h3>
+                              
+                              <div className="flex items-center justify-between mb-2">
+                                <span className="text-xs font-semibold text-gray-700">Progress</span>
+                                <span className="text-xs font-bold text-gray-900">{progress}%</span>
+                              </div>
+                              
+                              <div className="w-full bg-gray-200 rounded-full h-2 mb-4 overflow-hidden">
+                                <div className={`h-2 rounded-full transition-all duration-1000 ${report.status === 'Resolved' ? 'bg-[#2E7D32]' : 'bg-[#FFC107]'}`} style={{ width: `${progress}%` }}></div>
+                              </div>
+                              
+                              <div className="flex items-center justify-between text-xs p-2.5 bg-white rounded-lg border border-gray-100">
+                                <span className="text-gray-500 flex items-center gap-1.5 font-medium">
+                                  <Clock className="w-3.5 h-3.5 text-blue-500" /> Est. Completion
+                                </span>
+                                <span className="font-bold text-gray-900">{eta}</span>
+                              </div>
+                            </div>
+                            
+                            <div className="mt-6 flex justify-end">
+                              <button
+                                onClick={async () => {
+                                  if (window.confirm('Are you sure you want to delete this report?')) {
+                                    await deleteReport(report.id);
+                                    setView('feed');
+                                  }
+                                }}
+                                className="flex items-center gap-2 text-sm font-bold text-red-600 bg-red-50 px-4 py-2 rounded-lg hover:bg-red-100 transition-colors shadow-sm"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                                Delete Report
+                              </button>
+                            </div>
+                          </div>
+                        </>
+                      );
+                    })()}
+                  </motion.div>
+                ) : null}
+              </div>
+            </motion.div>
+          )}
+
+          {view === 'confirm' && (
