@@ -285,7 +285,7 @@ export default function CitizenApp({ onLogout }: { onLogout?: () => void }) {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -20 }}
-              className="p-4 pb-24"
+              className="p-4 pb-36"
             >
               <h2 className="text-lg font-semibold text-gray-800 mb-4">My Reports</h2>
               <div className="space-y-4">
@@ -333,7 +333,7 @@ export default function CitizenApp({ onLogout }: { onLogout?: () => void }) {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 20 }}
-              className="p-4 pb-24"
+              className="p-4 pb-36"
             >
               <div className="bg-white rounded-xl overflow-hidden shadow-sm border border-gray-100">
                 {(() => {
@@ -429,7 +429,7 @@ export default function CitizenApp({ onLogout }: { onLogout?: () => void }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="p-4 flex flex-col h-full"
+              className="p-4 pb-32 flex flex-col h-full"
             >
               <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden flex-1 flex flex-col">
                 <div className="h-64 w-full bg-gray-100 relative">
@@ -530,7 +530,7 @@ export default function CitizenApp({ onLogout }: { onLogout?: () => void }) {
 
       {/* Floating Action Button */}
       {view === 'feed' && (
-        <div className="absolute bottom-6 right-6 z-20">
+        <div className="absolute bottom-24 right-6 z-20">
           <button 
             onClick={openCamera}
             className="w-16 h-16 bg-[#FFC107] text-gray-900 rounded-full flex items-center justify-center shadow-xl shadow-amber-500/20 hover:bg-amber-400 transition-all hover:scale-105 active:scale-95"

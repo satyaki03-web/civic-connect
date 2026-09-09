@@ -35,7 +35,7 @@ const MOCK_REPORTS: Report[] = [
   },
   {
     id: '3',
-    imageUrl: 'https://images.unsplash.com/photo-1509390234125-9626cc355b2d?auto=format&fit=crop&q=80&w=400',
+    imageUrl: 'https://images.unsplash.com/photo-1519642918688-7e43b19245d8?auto=formathttps://images.unsplash.com/photo-1509390234125-9626cc355b2d?auto=format&fit=crop&q=80&w=400fit=crophttps://images.unsplash.com/photo-1509390234125-9626cc355b2d?auto=format&fit=crop&q=80&w=400q=80https://images.unsplash.com/photo-1509390234125-9626cc355b2d?auto=format&fit=crop&q=80&w=400w=400',
     description: 'Street light out at the intersection.',
     category: 'Lighting',
     priority: 'Medium',
